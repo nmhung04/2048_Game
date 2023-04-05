@@ -1,11 +1,55 @@
 //GAME 2048
 #include <SDL.h>
 #include <stdio.h>
+#include <vector>
+#include <cstdlib>
+#include <ctime>
+using namespace std;
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 320*3;
 const int SCREEN_HEIGHT = 240*3;
 
+int boardGame[4][4] = {{0, 2, 0, 0},{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}};
+
+//Board game is full?
+bool isFull(int a[4][4])
+{
+    int cnt = 0;
+    for(int i = 0; i <= 3; ++i)
+    {
+        for (int j = 0; j <= 3; ++j)
+        {
+            if(a[i][j] == 0) ++cnt;
+        }
+    }
+    if (cnt == 0) return false;
+    return true;
+}
+
+// Get random value: 2 or 4
+int getRandomValue()
+{
+    srand(time(nullptr));
+    int r = rand() % 2 ? 2 : 4;
+    return r;
+}
+
+//Set random value for blank tile
+void setRandValue(int a[4][4])
+{
+    vector <int> r;
+    for (int i = 0; i <= 3; ++i)
+    {
+        for (int j = 0; j <= 3; ++j)
+            if (a[i][j] == 0)
+                r.push_back(i*10 + j);
+    }
+    int n = r.size();
+    srand(time(nullptr));
+    int pos = rand() % (n);
+    a[r[pos] /10][r[pos] % 10] = getRandomValue();
+}
 
 int main( int argc, char* args[] )
 {
