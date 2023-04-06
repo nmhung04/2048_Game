@@ -23,7 +23,7 @@ bool isFull(int a[4][4])
             if(a[i][j] == 0) ++cnt;
         }
     }
-    if (cnt == 0) return false;
+    if (cnt != 0) return false;
     return true;
 }
 
