@@ -51,6 +51,166 @@ void setRandValue(int a[4][4])
     a[r[pos] /10][r[pos] % 10] = getRandomValue();
 }
 
+//=======================Move LEFT and Merge Tiles======================================//
+void moveLeft(int a[4][4])
+{
+    for (int row = 0; row <= 3; ++row)
+    {
+        for (int j = 0; j <= 3; ++j)
+        {
+            if (a[row][j] == 0)
+            {
+                int x = j;
+                while (a[row][x] == 0 && x <= 3)
+                    ++x;
+                if (x > 3)
+                    ;
+                else
+                {
+                    a[row][j] = a[row][x];
+                    a[row][x] = 0;
+                }
+            }
+        }
+    }
+}
+
+void MERGE_LEFT(int a[4][4])
+{
+    moveLeft(a);
+    for (int row = 0; row <= 3; ++row)
+    {
+        for (int j = 0; j <= 2; ++j)
+        {
+            if (a[row][j] == a[row][j + 1])
+            {
+                Score += a[row][j];
+                a[row][j] *= 2;
+                a[row][j + 1] = 0;
+            }
+        }
+    }
+    moveLeft(a);
+}
+//==========================Move RIGHT and Merge Tiles==================================//
+void moveRight(int a[4][4])
+{
+    for (int row = 0; row <= 3; ++row)
+    {
+        for (int j = 3; j >= 0; --j)
+        {
+            if (a[row][j] == 0)
+            {
+                int x = j;
+                while (a[row][x] == 0 && x >= 0)
+                    --x;
+                if (x < 0);
+                else
+                {
+                    a[row][j] = a[row][x];
+                    a[row][x] = 0;
+                }
+            }
+        }
+    }
+}
+void MERGE_RIGHT(int a[4][4])
+{
+    moveRight(a);
+    for (int row = 0; row <= 3; ++row)
+    {
+        for (int j = 3; j >= 1; --j)
+        {
+            if (a[row][j] == a[row][j - 1])
+            {
+                Score += a[row][j];
+                a[row][j] *= 2;
+                a[row][j - 1] = 0;
+            }
+        }
+    }
+    moveRight(a);
+}
+//===============================Move UP and Merge Tiles====================================//
+void moveUp(int a[4][4])
+{
+    for (int col = 0; col <= 3; ++col)
+    {
+        for (int j = 0; j <= 3; ++j)
+        {
+            if (a[j][col] == 0)
+            {
+                int x = j;
+                while (a[x][col] == 0 && x <= 3)
+                    ++x;
+                if (x > 3);
+                else
+                {
+                    a[j][col] = a[x][col];
+                    a[x][col] = 0;
+                }
+            }
+        }
+    }
+}
+void MERGE_UP(int a[4][4]){
+    moveUp(a);
+    for (int col = 0; col <= 3; ++col)
+    {
+        for (int j = 0; j <= 2; ++j)
+        {
+            if (a[j][col] == a[j+1][col])
+            {   
+                Score += a[j][col];
+                a[j][col] *= 2;
+                a[j+1][col] = 0;
+            }
+        }
+    }
+    moveUp(a);
+}
+//===================Move DOWN and Merge Tiles==========================//
+void moveDown(int a[4][4])
+{
+    for (int col = 0; col <= 3; ++col)
+    {
+        for (int j = 3; j >= 0; --j)
+        {
+            if (a[j][col] == 0)
+            {
+                int x = j;
+                while (a[x][col] == 0 && x >= 0)
+                    --x;
+                if (x < 0);
+                else
+                {
+                    a[j][col] = a[x][col];
+                    a[x][col] = 0;
+                }
+            }
+        }
+    }
+    
+}
+
+void MERGE_DOWN(int a[4][4]){
+    moveDown(a);
+    for (int col = 0; col <= 3; ++col)
+    {
+        for (int j = 3; j >= 1; --j)
+        {
+            if (a[j][col] == a[j-1][col])
+            {
+                Score += a[j][col];
+                a[j][col] *= 2;
+                a[j-1][col] = 0;
+            }
+        }
+    }
+    moveDown(a);
+}
+//==========================================================//
+
 int main( int argc, char* args[] )
 {
     //The window we'll be rendering to
