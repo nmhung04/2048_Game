@@ -4,14 +4,11 @@
 #include <vector>
 #include <cstdlib>
 #include <ctime>
+#include <iostream>
 using namespace std;
 
-//Screen dimension constants
-const int SCREEN_WIDTH = 320*3;
-const int SCREEN_HEIGHT = 240*3;
-
 int boardGame[4][4] = {{0, 2, 0, 0},{0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}};
-
+int Score = 0;
 //Board game is full?
 bool isFull(int a[4][4])
 {
@@ -211,54 +208,154 @@ void MERGE_DOWN(int a[4][4]){
 }
 //==========================================================//
 
-int main( int argc, char* args[] )
+const int SCREEN_WIDTH = 1000;
+const int SCREEN_HEIGHT = 750;
+const string WINDOW_TITLE = "2048 Game";
+
+void logSDLError(std::ostream& os,
+                 const std::string &msg, bool fatal = false);
+void initSDL(SDL_Window* &window, SDL_Renderer* &renderer)
 {
-    //The window we'll be rendering to
-    SDL_Window* window = NULL;
+    if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
+        logSDLError(std::cout, "SDL_Init", true);
+    window = SDL_CreateWindow(WINDOW_TITLE.c_str(), SDL_WINDOWPOS_CENTERED,
+                              SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+//window = SDL_CreateWindow(WINDOW_TITLE.c_str(), SDL_WINDOWPOS_CENTERED,
+    //SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_FULLSCREEN_DESKTOP);
+    if (window == nullptr) logSDLError(std::cout, "CreateWindow", true);
+//Khi thông thường chạy với môi trường bình thường ở nhà
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED |
+                                  SDL_RENDERER_PRESENTVSYNC);
+//Khi chạy ở máy thực hành WinXP ở trường (máy ảo)
+//renderer = SDL_CreateSoftwareRenderer(SDL_GetWindowSurface(window));
+    if (renderer == nullptr) logSDLError(std::cout, "CreateRenderer", true);
+    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
+    SDL_RenderSetLogicalSize(renderer, SCREEN_WIDTH, SCREEN_HEIGHT);
+}
 
-    //The surface contained by the window
-    SDL_Surface* screenSurface = NULL;
-
-    //Initialize SDL
-    if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
-    {
-        printf( "SDL could not initialize! SDL_Error: %s\n", SDL_GetError() );
-    }
-    else
-    {
-        //Create window
-        window = SDL_CreateWindow( "2048", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
-        if( window == NULL )
-        {
-            printf( "Window could not be created! SDL_Error: %s\n", SDL_GetError() );
-        }
-        else
-        {
-            //Get window surface
-            screenSurface = SDL_GetWindowSurface( window );
-
-            //Fill the surface white
-            SDL_FillRect( screenSurface, NULL, SDL_MapRGB( screenSurface->format, 0xFF, 0xFF, 0xFF ) );
-
-            //Update the surface
-            SDL_UpdateWindowSurface( window );
-
-            //Hack to get window to stay up
-            SDL_Event e;
-            bool quit = false;
-            while( quit == false )
-            {
-                while( SDL_PollEvent( &e ) )
-                {
-                    if( e.type == SDL_QUIT ) quit = true;
-                }
-            }
-        }
-    }    //Destroy window
-    SDL_DestroyWindow( window );
-
-    //Quit SDL subsystems
+//Exit
+void quitSDL(SDL_Window* window, SDL_Renderer* renderer);
+void quitSDL(SDL_Window* window, SDL_Renderer* renderer)
+{
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
     SDL_Quit();
+}
 
+//Wait until key pressed
+void waitUntilKeyPressed()
+{
+    SDL_Event e;
+    while (true)
+    {
+        if ( SDL_WaitEvent(&e) != 0 &&
+                (e.type == SDL_KEYDOWN || e.type == SDL_QUIT) )
+            return;
+        SDL_Delay(100);
+    }
+}
+
+
+
+//Error message
+void logSDLError(std::ostream& os,
+                 const std::string &msg, bool fatal)
+{
+    os << msg << " Error: " << SDL_GetError() << std::endl;
+    if (fatal)
+    {
+        SDL_Quit();
+        exit(1);
+    }
+}
+
+
+int main(int argc, char* argv[])
+{
+    SDL_Window* window;
+    SDL_Renderer* renderer;
+    initSDL(window, renderer);
+// Your drawing code here
+    SDL_SetRenderDrawColor(renderer, 240, 248, 255, 1);
+    SDL_Rect W = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
+    SDL_RenderFillRect(renderer, &W);
+    SDL_SetRenderDrawColor(renderer, 70, 70, 70, 70);
+    for (int i = 15; i<= 1000; i+= 15){
+        SDL_RenderDrawLine(renderer,i, 0 , i, 750);
+        SDL_RenderPresent(renderer);
+    }
+    for (int i = 15; i<= 750; i+= 15){
+        SDL_RenderDrawLine(renderer,0, i , 1000, i);
+        SDL_RenderPresent(renderer);
+    }
+    SDL_Rect board;
+    board.x = 100;
+    board.y = 200;
+    board.w = 400;
+    board.h = 400;
+    SDL_SetRenderDrawColor(renderer, 100, 200, 100, 255);
+    SDL_RenderFillRect(renderer, &board);
+    int x1 = 100, x2 = 200, x3 = 300, x4 = 400, x5 = 500;
+    int y1 = 200, y2 = 300, y3 = 400, y4 = 500, y5 = 600;
+    SDL_SetRenderDrawColor(renderer, 100, 100, 100, 100);
+    SDL_RenderDrawLine(renderer, x1, y1, x5, y1);
+    SDL_RenderDrawLine(renderer, x1, y2, x5, y2);
+    SDL_RenderDrawLine(renderer, x1, y3, x5, y3);
+    SDL_RenderDrawLine(renderer, x1, y4, x5, y4);
+    SDL_RenderDrawLine(renderer, x1, y5, x5, y5);
+
+    SDL_RenderDrawLine(renderer, x1, y1, x1, y5);
+    SDL_RenderDrawLine(renderer, x2, y1, x2, y5);
+    SDL_RenderDrawLine(renderer, x3, y1, x3, y5);
+    SDL_RenderDrawLine(renderer, x4, y1, x4, y5);
+    SDL_RenderDrawLine(renderer, x5, y1, x5, y5);
+    //  PLAY
+    SDL_RenderDrawLine(renderer, x5 + x2, y2, x5 + x2 + 200, y2);
+    SDL_RenderDrawLine(renderer, x5 + x2, y2 + 75, x5 + x2 + 200, y2 + 75);
+    SDL_RenderDrawLine(renderer, x5 + x2, y2, x5 + x2, y2 + 75);
+    SDL_RenderDrawLine(renderer, x5 + x2 + 200, y2, x5 + x2 + 200, y2 + 75);
+
+    SDL_Rect Play;
+    Play.x = x5 + x2;
+    Play.y = y2;
+    Play.w = 200;
+    Play.h = 75;
+    SDL_SetRenderDrawColor(renderer, 184, 134, 11, 1); // green
+    SDL_RenderFillRect(renderer, &Play);
+    //Play Again
+    SDL_Rect PlAgain;
+    PlAgain.x = x5 + x2;
+    PlAgain.y = y4;
+    PlAgain.w = 200;
+    PlAgain.h = 75;
+    SDL_SetRenderDrawColor(renderer, 184, 134, 11, 1);
+    SDL_RenderFillRect(renderer, &PlAgain);
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+    SDL_RenderDrawLine(renderer, x5 + x2, y4, x5 + x2 + 200, y4);
+    SDL_RenderDrawLine(renderer, x5 + x2, y4 + 75, x5 + x2 + 200, y4 + 75);
+    SDL_RenderDrawLine(renderer, x5 + x2, y4, x5 + x2, y4 + 75);
+    SDL_RenderDrawLine(renderer, x5 + x2 + 200, y4, x5 + x2 + 200, y4 + 75);
+
+    //Score
+    SDL_Rect Score;
+    Score.x = 50;
+    Score.y = 75;
+    Score.w = 200;
+    Score.h = 60;
+    SDL_SetRenderDrawColor(renderer, 184, 134, 11, 1);
+    SDL_RenderFillRect(renderer, &Score);
+
+    //MaxScore
+    SDL_Rect maxScore;
+    maxScore.x = 350;
+    maxScore.y = 75;
+    maxScore.w = 200;
+    maxScore.h = 60;
+    SDL_SetRenderDrawColor(renderer, 184, 134, 11, 1);
+    SDL_RenderFillRect(renderer, &maxScore);
+// use SDL_RenderPresent(renderer) to show it
+    SDL_RenderPresent(renderer);
+    waitUntilKeyPressed();
+    quitSDL(window, renderer);
     return 0;
 }
