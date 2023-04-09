@@ -463,7 +463,8 @@ int main(int argc, char* argv[])
 
 
 //Game
-    cout <<"GAME (using SDL)IS NOT COMPLETED \nPLAY ON CONSOLE SCREEN \nPress UP, DOWN, LEFT, or RIGHT to play" <<endl;
+    cout <<"GAME (using SDL)HAVEN'T BEEN COMPLETED \nDISPLAY ON CONSOLE SCREEN \n";
+    cout << "Click to game's window and press UP, DOWN, LEFT, or RIGHT to play \nView result on console screen" <<endl;
     SDL_Event e;
     bool quit = false;
     setRandValue(boardGame);
