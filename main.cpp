@@ -515,6 +515,6 @@ int main(int argc, char* argv[])
     }
 
     waitUntilKeyPressed();
-
+    void quitSDL(window, renderer);
     return 0;
 }
