@@ -329,7 +329,6 @@ int main(int argc, char* argv[])
     SDL_Window* window;
     SDL_Renderer* renderer;
     initSDL(window, renderer);
-// Your drawing code here
     SDL_SetRenderDrawColor(renderer, 240, 248, 255, 1);
     SDL_Rect W = {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT};
     SDL_RenderFillRect(renderer, &W);
@@ -344,15 +343,64 @@ int main(int argc, char* argv[])
         SDL_RenderDrawLine(renderer,0, i, 1000, i);
         SDL_RenderPresent(renderer);
     }
+
+    int home[25][25] = {{0, 0, 1, 0, 0 },
+                        {0,1 , 1, 1, 0 },
+                        {1, 1, 1, 1, 1 },
+                        {0, 1, 1, 1, 0 },
+                        {0, 1, 1, 1, 0 }};
+    SDL_SetRenderDrawColor(renderer, 0, 0, 230, 1);
+    for (int i = 0; i <= 4; ++i){
+        for (int j = 0; j <= 4; ++j){
+            if (home[j][i] == 1){
+                SDL_Rect cell = {(i + 1)*25, (j+1) * 25, 25, 25};
+                SDL_RenderFillRect(renderer, &cell);
+            }
+        }
+    }
+    int Text[24][5] ={{1, 1, 1, 1, 1, },
+                        {1, 1, 1, 1, 1, },
+                        {1, 0, 1, 0, 0, },
+                        {1, 1, 1, 0, 0, },
+                        {0, 0, 0, 0, 0, },
+                        {1, 1, 1, 1, 1, },
+                        {1, 1, 1, 1, 1, },
+                        {0, 0, 0, 1, 1, },
+                        {0, 0, 0, 1, 1, },
+                        {0, 0, 0, 0, 0, },
+                        {0, 0, 0, 1, 1, },
+                        {0, 0, 1, 1, 0, },
+                        {0, 1, 1, 1, 0, },
+                        {1, 1, 0, 1, 0, },
+                        {0, 1, 1, 1, 0, },
+                        {0, 0, 1, 1, 0, },
+                        {1, 0, 0, 1, 1, },
+                        {1, 1, 0, 0, 0, },
+                        {0, 1, 1, 0, 0, },
+                        {0, 0, 1, 1, 1, },
+                        {0, 0, 1, 1, 1, },
+                        {0, 1, 1, 0, 0, },
+                        {1, 1, 0, 0, 0, },
+                        {1, 0, 0, 0, 0, }};
+    SDL_SetRenderDrawColor(renderer, 0, 0, 230, 1);
+    for (int i = 0; i <= 23; ++i){
+        for (int j = 0; j <= 4; ++j){
+            if (Text[i][j] == 1){
+                SDL_Rect cell = {(i + 8)*25, (j+1) * 25, 25, 25};
+                SDL_RenderFillRect(renderer, &cell);
+            }
+        }
+    }
+    //Board game
+    int x1 = 100, x2 = 200, x3 = 300, x4 = 400, x5 = 500;
+    int y1 = 225, y2 = y1 + 100, y3 = y1 + 200, y4 = y1 + 300, y5 = y1 + 400;
     SDL_Rect board;
-    board.x = 100;
-    board.y = 200;
+    board.x = x1;
+    board.y = y1;
     board.w = 400;
     board.h = 400;
     SDL_SetRenderDrawColor(renderer, 100, 200, 100, 255);
     SDL_RenderFillRect(renderer, &board);
-    int x1 = 100, x2 = 200, x3 = 300, x4 = 400, x5 = 500;
-    int y1 = 200, y2 = 300, y3 = 400, y4 = 500, y5 = 600;
     SDL_SetRenderDrawColor(renderer, 100, 100, 100, 100);
     SDL_RenderDrawLine(renderer, x1, y1, x5, y1);
     SDL_RenderDrawLine(renderer, x1, y2, x5, y2);
@@ -365,37 +413,39 @@ int main(int argc, char* argv[])
     SDL_RenderDrawLine(renderer, x3, y1, x3, y5);
     SDL_RenderDrawLine(renderer, x4, y1, x4, y5);
     SDL_RenderDrawLine(renderer, x5, y1, x5, y5);
-    //  PLAY
-    SDL_RenderDrawLine(renderer, x5 + x2, y2, x5 + x2 + 200, y2);
-    SDL_RenderDrawLine(renderer, x5 + x2, y2 + 75, x5 + x2 + 200, y2 + 75);
-    SDL_RenderDrawLine(renderer, x5 + x2, y2, x5 + x2, y2 + 75);
-    SDL_RenderDrawLine(renderer, x5 + x2 + 200, y2, x5 + x2 + 200, y2 + 75);
 
+
+    //  PLAY Button
     SDL_Rect Play;
     Play.x = x5 + x2;
-    Play.y = y2;
+    Play.y = y3 + 25 ;
     Play.w = 200;
     Play.h = 75;
-    SDL_SetRenderDrawColor(renderer, 184, 134, 11, 1); // green
+    SDL_SetRenderDrawColor(renderer, 184, 134, 11, 1);
     SDL_RenderFillRect(renderer, &Play);
-    //Play Again
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 1);
+    SDL_RenderDrawLine(renderer, x5 + x2, y3 + 25 , x5 + x2 + 200, y3 + 25 );
+    SDL_RenderDrawLine(renderer, x5 + x2, y3 + 25  + 75, x5 + x2 + 200, y3 + 25  + 75);
+    SDL_RenderDrawLine(renderer, x5 + x2, y3 + 25 , x5 + x2, y3 + 25  + 75);
+    SDL_RenderDrawLine(renderer, x5 + x2 + 200, y3 + 25 , x5 + x2 + 200, y3 + 75);
+
+    //Play Again Button
     SDL_Rect PlAgain;
     PlAgain.x = x5 + x2;
-    PlAgain.y = y4;
+    PlAgain.y = y4 + 25;
     PlAgain.w = 200;
     PlAgain.h = 75;
     SDL_SetRenderDrawColor(renderer, 184, 134, 11, 1);
     SDL_RenderFillRect(renderer, &PlAgain);
-    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-    SDL_RenderDrawLine(renderer, x5 + x2, y4, x5 + x2 + 200, y4);
-    SDL_RenderDrawLine(renderer, x5 + x2, y4 + 75, x5 + x2 + 200, y4 + 75);
-    SDL_RenderDrawLine(renderer, x5 + x2, y4, x5 + x2, y4 + 75);
-    SDL_RenderDrawLine(renderer, x5 + x2 + 200, y4, x5 + x2 + 200, y4 + 75);
-
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 1);
+    SDL_RenderDrawLine(renderer, x5 + x2, y4 + 25, x5 + x2 + 200, y4 + 25);
+    SDL_RenderDrawLine(renderer, x5 + x2, y4 + 25 + 75, x5 + x2 + 200, y4 + 25 + 75);
+    SDL_RenderDrawLine(renderer, x5 + x2, y4 + 25, x5 + x2, y4 + 25 + 75);
+    SDL_RenderDrawLine(renderer, x5 + x2 + 200, y4 + 25, x5 + x2 + 200, y4 + 25 + 75);
     //Score
     SDL_Rect Score;
-    Score.x = 50;
-    Score.y = 75;
+    Score.x = x5 + x2;
+    Score.y = y2;
     Score.w = 200;
     Score.h = 60;
     SDL_SetRenderDrawColor(renderer, 184, 134, 11, 1);
@@ -403,8 +453,8 @@ int main(int argc, char* argv[])
 
     //MaxScore
     SDL_Rect maxScore;
-    maxScore.x = 350;
-    maxScore.y = 75;
+    maxScore.x = x5 + x2;
+    maxScore.y = y1;
     maxScore.w = 200;
     maxScore.h = 60;
     SDL_SetRenderDrawColor(renderer, 184, 134, 11, 1);
@@ -413,7 +463,7 @@ int main(int argc, char* argv[])
 
 
 //Game
-    cout <<"GAME (using SDL)IS NOT COMPLETED \nPLAY ON CONSOLE SCREEN" <<endl;
+    cout <<"GAME (using SDL)IS NOT COMPLETED \nPLAY ON CONSOLE SCREEN \nPress UP, DOWN, LEFT, or RIGHT to play" <<endl;
     SDL_Event e;
     bool quit = false;
     setRandValue(boardGame);
