@@ -1,4 +1,4 @@
-# 2048_Game  - Game đã được nâng độ khó
+# 2048_Game  - Khó hơn
 
 **Cách chơi: Trò chơi này có cách chơi đơn giản
 
