@@ -1,11 +1,8 @@
 # 2048_Game
-Để chạy chương trình và chơi game này, đầu tiên chúng ta cần tải và cài đặt thư viện SDL, SDL image và SDL font
+Để chạy chương trình và chơi game này, đầu tiên chúng ta cần tải và cài đặt thư viện SDL
 
-Tải và cài đặt thư viện SDL: https://www.libsdl.org/    (1)
-
-SDL image, SDL font: https://www.libsdl.org/projects/SDL_image/release/ (2)
-                        
-Với thư viện SDL (1), sau khi tải về:
+Tải và cài đặt thư viện SDL: https://www.libsdl.org/                       
+Với thư viện SDL, sau khi tải về:
 
   Giải nén vào một thư mục nào đó, trong đó có 2 thư mục, chỉ dùng đến 01
   
