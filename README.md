@@ -1,5 +1,14 @@
 # 2048_Game  - Game đã được nâng độ khó
 
+**Cách chơi: Trò chơi này có cách chơi đơn giản
+
+  Dùng các phím LÊN, XUỐNG, TRÁI, PHẢI để di chuyển các ô, các ô có giá trị giống nhau sẽ được gộp lại thành một với giá trị gấp đôi, 
+đồng thời mỗi lượt có một khối có giá trị 2 hoặc 4 hoặc 8 (tùy thuộc vào size) ѕẽ хuất hiện ngẫu nhiên ở một ô trống trên lưới. Khi không còn 2 ô nào cạnh nhau mà 
+có giá trị như nhau thì khi đó game oᴠer. Khi có ô đạt giá trị 2048, bạn thắng.
+
+
+
+
 Để chạy chương trình và chơi game này, đầu tiên chúng ta cần tải và cài đặt thư viện SDL
 
 Tải và cài đặt thư viện SDL: https://www.libsdl.org/                       
@@ -39,11 +48,4 @@ dẫn:
 
 ***Quy trình cài các thư viện mở rộng của SDL2.0
 hoàn toàn tương tự
-
-
-**Cách chơi:
-
-  Dùng các phím LÊN, XUỐNG, TRÁI, PHẢI để di chuyển các ô, các ô có giá trị giống nhau sẽ được gộp lại thành một với giá trị gấp đôi, 
-đồng thời mỗi lượt có một khối có giá trị 2 hoặc 4 ѕẽ хuất hiện ngẫu nhiên ở một ô trống trên lưới. Khi không còn 2 ô nào cạnh nhau mà 
-có giá trị như nhau thì khi đó game oᴠer. Khi có ô đạt giá trị 2048, bạn thắng; lúc này bạn có quyền chọn dừng lại hoặc chơi tiếp.
 
