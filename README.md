@@ -1,4 +1,5 @@
-# 2048_Game
+# 2048_Game  - Game đã được nâng độ khó
+
 Để chạy chương trình và chơi game này, đầu tiên chúng ta cần tải và cài đặt thư viện SDL
 
 Tải và cài đặt thư viện SDL: https://www.libsdl.org/                       
