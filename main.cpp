@@ -54,7 +54,7 @@ void DrawString(SDL_Surface *screen, int x, int y, const char *text, SDL_Surface
 
 
 
-// draw a single pixel
+//================ Draw a single pixel======================================//
 void DrawPixel(SDL_Surface *surface, int x, int y, Uint32 color) {
 	int bpp = surface->format->BytesPerPixel;
 	Uint8 *p = (Uint8 *)surface->pixels + y * surface->pitch + x * bpp;
@@ -63,7 +63,7 @@ void DrawPixel(SDL_Surface *surface, int x, int y, Uint32 color) {
 
 
 
-// draw a vertical (when dx = 0, dy = 1) or horizontal (when dx = 1, dy = 0) line
+//===================================Draw line===============================//
 void DrawLine(SDL_Surface *screen, int x, int y, int l, int dx, int dy, Uint32 color) {
 	for(int i = 0; i < l; i++) {
 		DrawPixel(screen, x, y, color);
@@ -72,7 +72,7 @@ void DrawLine(SDL_Surface *screen, int x, int y, int l, int dx, int dy, Uint32 c
 		};
 	};
 
-// draw a rectangle of size l by k
+//===========================Draw a rectangle of size l by k=================//
 void DrawRectangle(SDL_Surface *screen, int x, int y, int l, int k,
                    Uint32 outlineColor, Uint32 fillColor) {
 	int i;
@@ -84,7 +84,7 @@ void DrawRectangle(SDL_Surface *screen, int x, int y, int l, int k,
 		DrawLine(screen, x + 1, i, l - 2, 1, 0, fillColor);
 	};
 
-//Draw point of block in the middle of it
+//====================Draw point of block====================================//
 void DrawPoint(SDL_Surface *screen, int X, int Y, int width, const char *number, SDL_Surface *charset) {
 	int length = strlen(number);
 	DrawString(screen, (X + width / 2) - length*4, Y + width / 2, number, charset);
@@ -101,7 +101,7 @@ int get_power(int x) {
 	return n;
 }
 
-//draw board with all block and points
+//===================Draw Board, Score, Max Score=========================//
 void DrawBoard(SDL_Surface *screen, int **value_arr, int size, Uint32 outlineColor, Uint32 fillColor, SDL_Surface *charset) {
 	int width = (BOARD_WIDTH / size) - 2;
 	int X, Y;
@@ -224,9 +224,13 @@ bool checkToRandom(int **&value_arr, int **&value_arr2, int size) {
 void SetRandomValue(int **&value_arr, int size) {
 
 	if (checkPut(value_arr, size)) {
-		int values[10] = { 2, 4, 2, 2, 4, 2, 2, 4, 2, 4};
-		int value = values[rand() % 10];
-
+		int value4_5[10] = {2, 4, 2, 2, 4, 2, 2, 4, 2, 4};
+		int value6_8[10] = {2, 4, 2, 4, 4, 2, 4, 4, 2, 4};
+		int value8_10[10] = {8, 4, 8, 2, 4, 2, 8, 4, 2, 4};
+		int value;
+		if (size <= 5) value = value4_5[rand() % 10];
+		else if (size <= 8) value = value6_8[rand() % 10];
+		else value = value8_10[rand() % 10];
 		int X = rand() % size;
 		int Y = rand() % size;
 		if (value_arr[X][Y] == 0) value_arr[X][Y] = 2;
@@ -376,7 +380,7 @@ void MERGE_LEFT(int **&value_arr, int size, unsigned int &score, unsigned int &m
 	moveLeft(value_arr, size);
 }
 
-//copy one array to another
+//==========Copy Value Array====================//
 void copyValue_arr(int **&value_arr1,int **&value_arr2, int size) {
 	for (int i = 0; i < size; i++) {
 		for (int j = 0; j < size; j++) value_arr1[i][j] = value_arr2[i][j];
