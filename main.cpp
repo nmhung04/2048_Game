@@ -548,10 +548,6 @@ int main(int argc, char **argv) {
 	                           SDL_TEXTUREACCESS_STREAMING,
 	                           SCREEN_WIDTH, SCREEN_HEIGHT);
 
-
-	//disable cursor visibility
-	SDL_ShowCursor(SDL_DISABLE);
-
 	charset = SDL_LoadBMP("./cs8x8.bmp");
 	if(charset == NULL) {
 		printf("SDL_LoadBMP(cs8x8.bmp) error: %s\n", SDL_GetError());
@@ -589,7 +585,7 @@ int main(int argc, char **argv) {
 
 			SDL_FillRect(screen, NULL, black);
 			DrawRectangle(screen, 4, 120, SCREEN_WIDTH - 8, 36, black, lightblue);
-			sprintf(text, "CHOOSE SIZE OF GAME: \030 - BIGGER, \031 - SMALLER, ENTER - START PLAYING");
+			sprintf(text, "CHOOSE SIZE OF GAME: \030 - BIGGER, \031 - SMALLER, ENTER - START PLAYING, ESC - EXIT");
 			DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, 135, text, charset);
 
 			DrawRectangle(screen, SCREEN_WIDTH/2 - 100, SCREEN_HEIGHT/2 - 36, 200, 36, black, lightblue);
