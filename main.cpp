@@ -6,18 +6,14 @@
 #include <time.h>
 #include <stdlib.h>
 #include <string>
-
-
-extern "C" {
-#include"SDL.h"
-}
+#include <SDl.h>
 //=======================BoardGame size and position=====================//
 int SCREEN_WIDTH = 1000;
 int SCREEN_HEIGHT = 750;
 unsigned int max_score = 0;
 #define BOARD_SIZE 4
 
-#define BOARD_WIDTH		400
+#define BOARD_WIDTH 400
 #define BOARD_X 200
 #define BOARD_Y 200
 
