@@ -1,0 +1,10 @@
+# depslib dependency file v1.0
+1683644452 source:c:\users\ngman\onedrive\máy tính\2048_game\main.cpp
+	<math.h>
+	<stdio.h>
+	<string.h>
+	<time.h>
+	<stdlib.h>
+	<string>
+	"SDL.h"
+
